@@ -1,0 +1,15 @@
+$bold-font: 600;
+$pink: #ac4343;
+
+.type-racer {
+  .pass-text {
+    font-weight: $bold-font;
+  }
+  .correct {
+    font-weight: $bold-font;
+    text-decoration: underline;
+  }
+  .error {
+    color: $pink;
+  }
+}
