@@ -1,5 +1,5 @@
 <template lang="pug">
-main.type-racer
+article.type-racer(@click="focusInput")
   p
     span {{ timing.toFixed(2) }} s;&nbsp
     span(v-if="passText") {{ (100 - errorNumber / passText.length).toFixed(2) }} %;&nbsp
@@ -9,7 +9,12 @@ main.type-racer
     span.correct {{ correctInput }}
     span.error {{ errorInput }}
     span.residue {{ residueWord }}{{ residueText }}
-input.user-input(@input="handleInput" :disabled="gameStatus === GameStatus.FINISH")
+input.user-input(
+  ref="inputEl"
+  :disabled="gameStatus === GameStatus.FINISH"
+  @input="handleInput"
+  )
+button(@click="handleRestart") restart
 </template>
 
 <script lang="ts">
@@ -37,21 +42,25 @@ const getParagraphHead = (s: string) => {
  return l.length === 1 ? l[0] : l[0] + ' ';
 }
 
+const getNewParagraph = () => {
+  return DEMO_TEXT;
+}
+
 const getParagraphTail = (s: string) => tail(s.split(' ')).join(' ');
 
 enum GameStatus {
-  RUNNING = Symbol('running'),
-  PENDING = Symbol('pending'),
-  FINISH = Symbol('finish')
+  RUNNING = 'running',
+  PENDING = 'pending',
+  FINISH = 'finish'
 }
 
 export default defineComponent({
   name: 'TypingGame',
   setup() {
-    const text = DEMO_TEXT;
-    const residueText = ref<string>(text);
+    const residueText = ref<string>(getNewParagraph());
     const passText = ref<string>('');
 
+    const inputEl = ref<HTMLInputElement|null>(null);
     const gameStatus = ref<GameStatus>(GameStatus.PENDING);
     const timing = ref<number>(0);
     const errorNumber = ref<number>(0);
@@ -103,15 +112,18 @@ export default defineComponent({
       errorInput.value = '';
       residueWord.value = currentWord.value;
     }
-    const handleInput = e => {
+    const focusInput = () => {
+      inputEl.value!.focus();
+    }
+    const handleInput = () => {
       if (gameStatus.value === GameStatus.PENDING) {
         gameStatus.value = GameStatus.RUNNING;
         increaseWord(true);
       }
-      const rawInput = e.target.value;
+      const rawInput = inputEl.value!.value;
       if (rawInput === currentWord.value) {
         increaseWord();
-        e.target.value = '';
+        inputEl.value!.value = '';
         return;
       }
       const lastIndex = getLCP(rawInput, currentWord.value);
@@ -124,20 +136,33 @@ export default defineComponent({
         residueWord.value = currentWord.value.substring(rawInput.length);
       }
     }
+    const handleRestart = () => {
+      residueText.value = getNewParagraph();
+      passText.value = '';
+      gameStatus.value = GameStatus.PENDING;
+      timing.value = 0;
+      errorNumber.value = 0;
+      speed.value = 0;
+      currentWord.value = '';
+      correctInput.value = '';
+      residueWord.value = currentWord.value;
+    }
     return {
+      inputEl,
       timing,
       errorNumber,
       speed,
       GameStatus,
       gameStatus,
-      text,
       passText,
       correctInput,
       currentWord,
       errorInput,
       residueWord,
       residueText,
-      handleInput
+      focusInput,
+      handleInput,
+      handleRestart
     }
   }
 })
