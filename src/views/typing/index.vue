@@ -66,7 +66,7 @@ export default defineComponent({
     const errorNumber = ref<number>(0);
     const speed = ref<number>(0);
 
-    let timingInterval = 0;
+    let timingInterval: any = 0;
     watchEffect(() => {
       switch (gameStatus.value) {
         case GameStatus.PENDING:
