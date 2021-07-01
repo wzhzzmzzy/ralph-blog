@@ -1,8 +1,6 @@
-export default {
-  state: () => ({
+import {defineStore} from "pinia";
 
-  }),
-  mutations: {
-
-  }
-}
+export const useTypingStore = defineStore({
+  id: 'typing',
+  state: () => ({})
+});
