@@ -4,7 +4,7 @@
       <template v-if="Component">
         <transition mode="out-in">
           <keep-alive>
-            <suspense @pending="startLoading" @resolve="finishLoading">
+            <suspense>
               <component :is="Component"/>
             </suspense>
           </keep-alive>

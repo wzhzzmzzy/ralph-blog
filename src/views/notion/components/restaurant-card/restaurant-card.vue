@@ -1,12 +1,12 @@
 <template lang="pug">
-  n-card.restaurant-card(hoverable)
-    template(v-slot:header)
-      span.restaurant-card__name {{ name }}
-      n-gradient-text(:gradient="calcGradientByScore(score)") {{ score.toFixed(1) }}
-    template(v-slot:header-extra v-if="link")
-      n-button.external-link-btn(text @click="openDianPingLink(link)"): n-icon: external-link
-    template(v-slot:default)
-      div {{ comment }}
+n-card.restaurant-card(hoverable)
+  template(v-slot:header)
+    span.restaurant-card__name {{ name }}
+    n-gradient-text(:gradient="calcGradientByScore(score)") {{ score.toFixed(1) }}
+  template(v-slot:header-extra v-if="link")
+    n-button.external-link-btn(text @click="openDianPingLink(link)"): n-icon: external-link
+  template(v-slot:default)
+    div {{ comment }}
 </template>
 
 <script setup lang="ts">
@@ -28,7 +28,7 @@ const DIANPING_PC_LINK = 'https://www.dianping.com/shop/';
 
 const {name, score, tag, comment, link} = toRefs(props);
 
-const calcGradientByScore = score => {
+const calcGradientByScore = (score: number) => {
   const red = 255 - (10 - score) * (score > 7 ? 20 : 30);
   const green = 0;
   const blue = 50 + (10 - score) * 30;
@@ -39,7 +39,7 @@ const calcGradientByScore = score => {
   };
 }
 
-const openDianPingLink = shopId => {
+const openDianPingLink = (shopId: string) => {
   const {isMobile} = useEnv();
   console.log(isMobile);
   const linkPrefix = isMobile ? DIANPING_MOBILE_LINK : DIANPING_PC_LINK;
