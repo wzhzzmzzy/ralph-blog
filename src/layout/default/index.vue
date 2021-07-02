@@ -1,18 +1,20 @@
 <template lang="pug">
-  n-config-provider(:theme="theme")
-    slot
-    n-config-provider(:theme="reverseTheme" namespace="reverse")
-      n-affix.switch-theme-affix(:bottom="120" :trigger-bottom="60")
-        n-button.switch-theme-affix__btn(circle :size="large" type="primary" @click="switchTheme")
-          template(#icon)
-            n-icon
-              moon-stars(v-if="currentTheme === 'light'")
-              sun(v-else)
+n-config-provider(:theme="theme")
+  n-layout
+    n-layout-content
+      slot
+      n-config-provider(:theme="reverseTheme" namespace="reverse")
+        n-affix.switch-theme-affix(:bottom="120" :trigger-bottom="60")
+          n-button.switch-theme-affix__btn(circle size="large" :type="currentTheme === 'light' ? 'primary' : 'warning'" @click="switchTheme")
+            template(#icon)
+              n-icon
+                moon-stars(v-if="currentTheme === 'light'")
+                sun(v-else)
 </template>
 
 <script lang="ts">
 import {defineComponent, ref, toRefs, watch} from "vue";
-import {NConfigProvider, NAffix, NButton, NIcon, darkTheme, useOsTheme} from 'naive-ui';
+import {NConfigProvider, NAffix, NButton, NIcon, NLayout, NLayoutContent, darkTheme, useOsTheme} from 'naive-ui';
 import {MoonStars, Sun} from '@vicons/carbon';
 import {useGlobalStore} from "../../store/global";
 
@@ -20,6 +22,8 @@ export default defineComponent({
   name: 'DefaultLayout',
   components: {
     NConfigProvider,
+    NLayout,
+    NLayoutContent,
     NAffix,
     NButton,
     NIcon,
