@@ -1,5 +1,5 @@
-export const useEnv = () => {
-  const isMobile = /Android|webOS|iPhone|iPad|Mac|Macintosh|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+export const checkMobile = () => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   return {
     isMobile,
     isDesktop: !isMobile

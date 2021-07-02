@@ -1,38 +1,26 @@
 <template>
   <n-loading-bar-provider>
-    <router-view v-slot="{ Component }">
-      <template v-if="Component">
-        <transition mode="out-in">
-          <keep-alive>
-            <suspense>
-              <component :is="Component"/>
-            </suspense>
-          </keep-alive>
-        </transition>
-      </template>
-    </router-view>
+    <default-layout>
+      <wrapped-router-view/>
+    </default-layout>
   </n-loading-bar-provider>
 </template>
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {NLoadingBarProvider, useLoadingBar} from "naive-ui";
+import {NLoadingBarProvider} from "naive-ui";
+import WrappedRouterView from "./components/wrapped-router-view.vue";
+import DefaultLayout from "./layout/default/index.vue";
 
 export default defineComponent({
   name: 'App',
   components: {
+    DefaultLayout,
+    WrappedRouterView,
     NLoadingBarProvider
   },
   setup() {
-    // const loadingBar = useLoadingBar();
-    // const startLoading = () => loadingBar.start();
-    // const finishLoading = () => loadingBar.finish();
-    // const errorLoading = () => loadingBar.error();
-    return {
-      // startLoading,
-      // finishLoading,
-      // errorLoading
-    }
+
   }
 })
 </script>

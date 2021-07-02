@@ -2,7 +2,7 @@
 section.food-map-container
   n-grid(x-gap="12" :y-gap="8" cols="2 s:3 m:4 l:4 xl:5 2xl:5" responsive="screen")
     template(v-for="tip in tips" :key="tip.name")
-      n-gi: RestaurantCard(v-bind="tip")
+      n-grid-item: RestaurantCard(v-bind="tip")
 </template>
 
 <script lang="ts">
