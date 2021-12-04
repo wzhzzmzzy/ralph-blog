@@ -21,7 +21,7 @@ n-card.restaurant-card(hoverable)
 import {defineProps, toRefs} from "vue";
 import {NCard, NTag, NGradientText, NButton, NIcon, NEllipsis, NPopover} from 'naive-ui';
 import {ExternalLink} from '@vicons/carbon';
-import {checkMobile} from '../../../../hooks';
+import {checkMobile} from '../../../../lib/hooks';
 import QRCode from '../../../../components/qrcode/index.vue';
 
 const props = defineProps<{

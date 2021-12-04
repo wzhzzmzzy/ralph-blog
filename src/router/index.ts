@@ -1,55 +1,73 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import IndexPage from '../views/index/index.vue';
-import NotionPage from '../views/notion/index.vue';
-import NotionBillPage from '../views/notion/bill/index.vue';
-import NotionFoodMapPage from '../views/notion/food-map/index.vue';
-import TypingGame from '../views/typing/index.vue';
-import PostPage from '../views/post/index.vue';
+import LoginPage from '../views/login/index.vue';
+import ExperimentPage from '../views/experiment/index.vue';
+import ExperimentRecords from '../views/experiment/records/index.vue';
 
-const gameRoutes = [
+// typings.d.ts or router.ts
+import 'vue-router'
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    noAuth?: boolean
+    title?: string
+  }
+}
+
+// const gameRoutes: RouteRecordRaw[] = [
+//   {
+//     name: 'typing',
+//     path: '/typing',
+//     component: TypingGame
+//   }
+// ]
+
+const experimentRoutes: RouteRecordRaw[] = [
   {
-    name: 'typing',
-    path: '/typing',
-    component: TypingGame
+    name: 'experiment',
+    path: '/experiment',
+    component: ExperimentPage,
+    children: [
+      {
+        name: 'experiment-records',
+        path: 'records',
+        component: ExperimentRecords,
+        meta: {
+          title: '#userName#的实验记录'
+        }
+      }
+    ]
   }
 ]
 
-const blogRoutes = [
-  {
-    name: 'post',
-    path: '/post',
-    component: PostPage
-  }
-]
+// const blogRoutes: RouteRecordRaw[] = [
+//   {
+//     name: 'post',
+//     path: '/post',
+//     component: PostPage
+//   }
+// ]
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     name: 'index',
     path: '/',
-    component: IndexPage
+    component: IndexPage,
   },
   {
-    name: 'notion',
-    path: '/notion',
-    component: NotionPage,
-    children: [
-      {
-        name: 'notion-bill',
-        path: 'bill',
-        component: NotionBillPage
-      },
-      {
-        name: 'food-map',
-        path: 'food-map',
-        component: NotionFoodMapPage
-      }
-    ]
+    name: 'login',
+    path: '/login',
+    component: LoginPage,
+    meta: {
+      noAuth: true
+    }
   },
-  ...gameRoutes,
-  ...blogRoutes
+  ...experimentRoutes
 ];
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
+
+export default router;
