@@ -4,12 +4,21 @@ import NotionPage from '../views/notion/index.vue';
 import NotionBillPage from '../views/notion/bill/index.vue';
 import NotionFoodMapPage from '../views/notion/food-map/index.vue';
 import TypingGame from '../views/typing/index.vue';
+import PostPage from '../views/post/index.vue';
 
 const gameRoutes = [
   {
     name: 'typing',
     path: '/typing',
     component: TypingGame
+  }
+]
+
+const blogRoutes = [
+  {
+    name: 'post',
+    path: '/post',
+    component: PostPage
   }
 ]
 
@@ -36,7 +45,8 @@ const routes = [
       }
     ]
   },
-  ...gameRoutes
+  ...gameRoutes,
+  ...blogRoutes
 ];
 
 export default createRouter({

@@ -1,5 +1,5 @@
 <template>
-  <n-button @click="switchTheme">SwitchTheme</n-button>
+  <div></div>
 </template>
 
 <script lang="ts">
